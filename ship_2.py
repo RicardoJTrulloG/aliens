@@ -1,0 +1,33 @@
+import pygame
+
+class Ship:
+    """Clase que gestiona la nave"""
+    def __init__(self, ai_game):
+        self.screen = ai_game.screen
+        self.settings = ai_game.settings
+        self.screen_rect = ai_game.screen.get_rect()
+
+        #Cargamos la imagen de la nave
+        self.image = pygame.image.load('./images/ship.png')
+        self.rect = self.image.get_rect()
+
+        self.rect.midleft = self.screen_rect.midleft
+
+        self.y = float(self.rect.y)
+
+        self.moving_right = False
+        self.moving_left = False
+    
+    def update(self):
+        """Actualiza la posición de la nave"""
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.y -= 1
+
+        if self.moving_left: #screen_height
+            self.y += 1
+
+        self.rect.y = self.y
+
+    def blitme(self):
+        """Dibuja la nave"""
+        self.screen.blit(self.image, self.rect)
